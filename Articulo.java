@@ -22,3 +22,15 @@ public class Articulo {
     }
             
 }
+public class tarjeta extends Pago{
+    private String tipo;
+    private String numTransaccion;
+    public 
+    
+}
+public class transferencia{
+
+}
+public class efectivo{
+
+}
