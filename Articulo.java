@@ -22,15 +22,32 @@ public class Articulo {
     }
             
 }
-public class tarjeta extends Pago{
+// TODO LO DE LA CLASE PAGO
+public class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
-    public 
+    public Tarjeta(String t,String numT){
+        tipo=t;
+        numTransaccion= numT;
+    }
     
 }
-public class transferencia{
-
+public class Transferencia extends Pago{
+    private String banco;
+    private String numCuenta;
+    public Transferencia(String bank,String nc){
+        banco=bank;
+        numCuenta=nc;
+    }
+    
 }
-public class efectivo{
-
+public class Efectivo extends Pago{
+    private float pagoDelCliente;
+    public Efectivo(float p){
+        pagoDelCliente= p;
+    }
+    public float calcDevolucion(){
+        float pagoTotal=monto-PagoDelCliente;
+        return pagoTotal;
+    }
 }
