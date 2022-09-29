@@ -1,0 +1,42 @@
+import java.util.Date;
+
+class Pago{
+    private float monto;
+    private Date fecha;
+    public Pago(float m, Date f){
+        monto=m;
+        fecha=f;
+    }
+    public float getMonto(){
+        return monto;
+    }
+}
+class Tarjeta extends Pago{
+    private String tipo;
+    private String numTransaccion;
+    public Tarjeta(String t,String numT,float m, Date f){
+        super(m,f);
+        tipo=t;
+        numTransaccion= numT;
+    }
+}
+class Transferencia extends Pago{
+    private String banco;
+    private String numCuenta;
+    public Transferencia(String bank,String nc,float m, Date f){
+        super(m,f);
+        banco=bank;
+        numCuenta=nc;
+    }  
+}
+class Efectivo extends Pago{
+    private float pagoDelCliente;
+    public Efectivo(float p,float m, Date f){
+        super(m,f);
+        pagoDelCliente= p;
+    }
+    public float calcDevolucion(float p){
+        float pagoTotal=getMonto()-p;
+        return pagoTotal;
+    }
+}
