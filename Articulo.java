@@ -19,10 +19,16 @@ public class Articulo {
     }
     public float getPeso(){
         return peso;
-    }
-            
+    }        
 }
-// TODO LO DE LA CLASE PAGO
+public class Pago{
+    private float monto;
+    private Date fecha;
+    public Pago(float m, Date f){
+        monto=m;
+        fecha=f;
+    }
+}
 public class Tarjeta extends Pago{
     private String tipo;
     private String numTransaccion;
@@ -30,7 +36,6 @@ public class Tarjeta extends Pago{
         tipo=t;
         numTransaccion= numT;
     }
-    
 }
 public class Transferencia extends Pago{
     private String banco;
@@ -38,8 +43,7 @@ public class Transferencia extends Pago{
     public Transferencia(String bank,String nc){
         banco=bank;
         numCuenta=nc;
-    }
-    
+    }  
 }
 public class Efectivo extends Pago{
     private float pagoDelCliente;
@@ -51,3 +55,4 @@ public class Efectivo extends Pago{
         return pagoTotal;
     }
 }
+
