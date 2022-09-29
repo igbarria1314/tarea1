@@ -1,0 +1,30 @@
+
+package tareaprogra;
+import java.util.ArrayList;
+
+public class DetalleOrden {
+    
+    private int cantidad;
+    private ArrayList<Articulo> Lista;
+    
+    public DetalleOrden(){
+        
+        Lista = new ArrayList();
+        cantidad = 0;
+    }
+    
+    public void newObject(Articulo nuevo){
+        
+        Lista.add(nuevo);
+        cantidad++;
+    }
+    
+    public float CalcularPrecio(){
+        float result = 0;
+        for (int i = 0; i < cantidad; i++) {
+            
+            result =  result + Lista[i].precio;
+        }
+    }
+    
+}
