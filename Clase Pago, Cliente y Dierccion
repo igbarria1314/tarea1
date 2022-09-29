@@ -40,3 +40,17 @@ class Efectivo extends Pago{
         return pagoTotal;
     }
 }
+class Cliente{
+    private String nombre;
+    private String rut;
+    public Cliente(String nom,String r){
+        nombre=nom;
+        rut=r;
+    }
+}
+class Direccion{
+    private String direccion;
+    public Direccion(String d){
+        direccion=d;
+    }
+}
