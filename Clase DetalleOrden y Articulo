@@ -1,3 +1,6 @@
+package tareaprogra;
+import java.util.ArrayList;
+import java.util.Date;
 class Articulo {
     private float peso;
     private String nombre;
@@ -19,21 +22,15 @@ class Articulo {
 }
 class DetalleOrden {
     private int cantidad;
-    private ArrayList<Articulo> Lista;
-    public DetalleOrden(){
-        Lista = new ArrayList();
-        cantidad = 0;
+    private Articulo Objeto;
+    public DetalleOrden(Articulo cosa, int valor){
+        cantidad = valor;
+        Objeto = cosa;
     }
-    public void newObject(Articulo nuevo){
-        Lista.add(nuevo);
-        cantidad++;
-    }
+
     public float CalcPrecio(){
-        float result = 0;
-        for (int i = 0; i < cantidad+1; i++) {
-            result += Lista.get(i).getPrecio();
-        }
-        return result;
+
+        return Objeto.getPrecio()*cantidad;
     }
     public float Iva(){
         float iva;
@@ -44,10 +41,44 @@ class DetalleOrden {
         return CalcPrecio()-Iva();
     }
     public float CalcPeso(){
-        float result=0;
-        for (int i = 0; i < cantidad+1; i++) {
-            result += Lista.get(i).getPeso();
+        
+        return Objeto.getPeso() * cantidad;
+    }
+    
+
+}
+class OrdenCompra{
+    
+    private Date fecha;
+    private String estado;
+    private ArrayList<DetalleOrden> Lista;
+    private int cantidad;
+
+    
+    public OrdenCompra(){
+        Lista = new ArrayList();
+        cantidad = 0;
+    }
+    
+    public void newOrden(Articulo nuevo, int cantidad){
+        Lista.add(new DetalleOrden(nuevo, cantidad));
+        cantidad++;
+    }
+    
+    public float CalcPrecio(){
+        float total = 0;
+        for (int i = 0; i < cantidad; i++) {
+            total = total +Lista.get(i).CalcPrecio();
         }
-        return result;
+        return total;
+    }
+    
+    public float Iva(){
+        float iva = CalcPrecio()*0.19f;
+        return iva;
+    }
+    
+    public float CalcPrecioSinIVA(){
+        return CalcPrecio()-Iva();
     }
 }
