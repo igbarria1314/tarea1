@@ -1,0 +1,53 @@
+class Articulo {
+    private float peso;
+    private String nombre;
+    private String descripcion;
+    private float precio;
+    
+    public Articulo(float kg, String alias, String que, float caro){
+        peso = kg;
+        nombre = alias;
+        descripcion = que;
+        precio = caro;
+    }
+    public float getPrecio(){
+        return precio;
+    }
+    public float getPeso(){
+        return peso;
+    }        
+}
+class DetalleOrden {
+    private int cantidad;
+    private ArrayList<Articulo> Lista;
+    public DetalleOrden(){
+        Lista = new ArrayList();
+        cantidad = 0;
+    }
+    public void newObject(Articulo nuevo){
+        Lista.add(nuevo);
+        cantidad++;
+    }
+    public float CalcPrecio(){
+        float result = 0;
+        for (int i = 0; i < cantidad+1; i++) {
+            result += Lista.get(i).getPrecio();
+        }
+        return result;
+    }
+    public float Iva(){
+        float iva;
+        iva=(float) (CalcPrecio()*0.19);
+        return iva;
+    }
+    public float CalcPrecioSinIVA(){
+        return CalcPrecio()-Iva();
+    }
+    public float CalcPeso(){
+        float result=0;
+        for (int i = 0; i < cantidad+1; i++) {
+            result += Lista.get(i).getPeso();
+        }
+        return result;
+    }
+}
