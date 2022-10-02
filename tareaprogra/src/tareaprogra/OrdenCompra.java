@@ -1,7 +1,6 @@
 
 package tareaprogra;
 
-package tareaprogra;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ class Articulo {
     private String nombre;
     private String descripcion;
     private float precio;
-    public Articulo(float kg, String alias, String que, float caro){
+    public Articulo(String alias, String que, float caro, float kg){
         peso = kg;
         nombre = alias;
         descripcion = que;
@@ -23,6 +22,9 @@ class Articulo {
     public float getPeso(){
         return peso;
     }        
+    public String ToString(){
+        return "Articulo: "+ nombre+"\nDescripcion: "+ descripcion+"\nPrecio:"+precio+"\nPeso:"+peso+"kg";
+    }
 }
 class DetalleOrden {
     private int cantidad;
@@ -70,7 +72,6 @@ class OrdenCompra{
             Lista.add(new DetalleOrden(nuevo, cantidad));
             cantidad++;
         }
-        
     }
     public void elecDoc(String dato, String carnet, Date calen, int eleccion){
         switch(eleccion){
@@ -80,7 +81,6 @@ class OrdenCompra{
             case 2:
                 bol = new Boleta(dato,carnet,calen);
         }
-        
     }
     public void newCliente(String nom, String r, String direc){
         usuario= new Cliente(nom,r);
@@ -100,9 +100,7 @@ class OrdenCompra{
     }
     public void pagEfectivo(Efectivo billetes){
         Pagos.add(new Pago(billetes.getMonto(),billetes.getFecha()));
-        
     }
-    
     public void pagTarjeta(Tarjeta tarjet){
         Pagos.add(new Pago(tarjet.getMonto(),tarjet.getFecha()));
     }
@@ -175,6 +173,9 @@ class Cliente{
         nombre=nom;
         rut=r;
     }
+    public String getRut(){
+        return rut;
+    }
 }
 class Direccion{
     private String direccion;
@@ -191,7 +192,6 @@ class DocumentoTributario {
         numero = dato;
         rut = carnet;
         fecha = calen;
-        pagos = 0f;
     }
     public String getNum(){
         return numero;
@@ -201,6 +201,9 @@ class DocumentoTributario {
     }
     public Date getFecha(){
         return fecha;
+    }
+    public String ToString(){
+     return "Numero:"+numero+"\nRut:"+rut+"\nFecha:"+fecha;
     }
 }
 class Boleta extends DocumentoTributario{
@@ -212,4 +215,19 @@ class Factura extends DocumentoTributario{
     public Factura(String dato, String carnet, Date calen){   
         super(dato,carnet,calen);
     }
+}
+public class ProyectoOrdenCompra {
+
+    public static void main(String[] args) {
+        
+        Articulo yogurth= new Articulo("yogurth","yogurth frutilla",390,0.02f);
+        String prueba=yogurth.ToString();
+        System.out.println(prueba+"\n");
+        Date fecha= new Date(120,5,3,10,5,6);
+        DocumentoTributario documento= new DocumentoTributario("23","213333000",fecha);
+        String doc=documento.ToString();
+        System.out.println(doc+"\n");
+        
+    }
+    
 }
