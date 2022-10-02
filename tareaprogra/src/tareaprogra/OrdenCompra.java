@@ -88,7 +88,6 @@ class OrdenCompra{
     }
     public void Pagotrans(Transferencia count){
         Pagos.add(new Pago(count.getMonto(),count.getFecha()));
-        
     }
     public void finDetalles(){
         estado = "En Progreso";
@@ -99,12 +98,14 @@ class OrdenCompra{
             estado = "Completado";
         }
     }
-    
     public void pagEfectivo(Efectivo billetes){
+        Pagos.add(new Pago(billetes.getMonto(),billetes.getFecha()));
         
     }
     
-    public void pagTarjeta(Tarjeta )
+    public void pagTarjeta(Tarjeta tarjet){
+        Pagos.add(new Pago(tarjet.getMonto(),tarjet.getFecha()));
+    }
     public float CalcPrecio(){
         float result = 0;
         for (int i = 0; i < cantidad; i++) {
