@@ -69,11 +69,13 @@ class OrdenCompra{
         cantidad = 0;
         this.fecha = fecha; 
         estado = "Ingresando Articulos";
+        total = 0;
     }
     public void newOrden(Articulo nuevo, int cantidad){
         if(estado == "Ingresando Articulos"){
             Lista.add(new DetalleOrden(nuevo, cantidad));
             cantidad++;
+            total = total + nuevo.getPrecio()*cantidad;
         }
     }
     public void elecDoc(String dato, String carnet, Date calen, int eleccion){
@@ -91,22 +93,32 @@ class OrdenCompra{
     }
     public void Pagotrans(Transferencia count){
         Pagos.add(new Pago(count.getMonto(),count.getFecha()));
+        status(count.getMonto());
     }
     public void finDetalles(){
         estado = "En Progreso";
         Pagos = new ArrayList();
     }
-    public void status(){
-        if(total == 0){
+    public void status(float resta){
+        total = total - resta;
+        if(total <= 0){
             estado = "Completado";
+            total = 0;
         }
         
     }
     public void pagEfectivo(Efectivo billetes){
         Pagos.add(new Pago(billetes.getMonto(),billetes.getFecha()));
+        float comprobar = total-billetes.getMonto();
+        if(comprobar <= 0){
+            billetes.calcDevolucion(comprobar);
+        }
+        status(billetes.getMonto());
+        
     }
     public void pagTarjeta(Tarjeta tarjet){
         Pagos.add(new Pago(tarjet.getMonto(),tarjet.getFecha()));
+        status(tarjet.getMonto());
     }
     public float CalcPrecio(){
         float result = 0;
@@ -166,11 +178,11 @@ class Efectivo extends Pago{
         pagoDelCliente= p;
     }
     public float calcDevolucion(float p){
-        float pagoTotal=getMonto()-p;
-        if(pagoTotal<0){
-            pagoTotal=pagoTotal*-1;
+        
+        if(p<0){
+            p = p *-1;
         }
-        return pagoTotal;
+        return p;
     }
 }
 class Cliente{
@@ -223,7 +235,7 @@ class Factura extends DocumentoTributario{
         super(dato,carnet,calen);
     }
 }
-public class ProyectoOrdenCompra {
+public class ProyectoOrdenCompra{
 
     public static void main(String[] args) {
         
