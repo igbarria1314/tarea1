@@ -48,6 +48,9 @@ class DetalleOrden {
         
         return Objeto.getPeso() * cantidad;
     }
+    public String ToString(){
+        return "Cantidad: "+cantidad+"\nArticulo: "+Objeto.ToString();
+    }
 }
 class OrdenCompra{
     private Date fecha;
@@ -97,6 +100,7 @@ class OrdenCompra{
         if(total == 0){
             estado = "Completado";
         }
+        
     }
     public void pagEfectivo(Efectivo billetes){
         Pagos.add(new Pago(billetes.getMonto(),billetes.getFecha()));
@@ -132,6 +136,9 @@ class Pago{
     }
     public Date getFecha(){
         return fecha;
+    }
+    public String ToString(){
+        return "Monto:"+monto+"\nFecha:"+fecha;
     }
 }
 class Tarjeta extends Pago{
@@ -221,13 +228,16 @@ public class ProyectoOrdenCompra {
     public static void main(String[] args) {
         
         Articulo yogurth= new Articulo("yogurth","yogurth frutilla",390,0.02f);
-        String prueba=yogurth.ToString();
+        DetalleOrden alDetalle= new DetalleOrden(yogurth,3);
+        String prueba=alDetalle.ToString();
         System.out.println(prueba+"\n");
         Date fecha= new Date(120,5,3,10,5,6);
         DocumentoTributario documento= new DocumentoTributario("23","213333000",fecha);
         String doc=documento.ToString();
         System.out.println(doc+"\n");
-        
+        Pago precio= new Pago(400,fecha);
+        String test=precio.ToString();
+        System.out.println(test+"\n");
     }
     
 }
