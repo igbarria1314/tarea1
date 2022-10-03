@@ -105,7 +105,7 @@ class OrdenCompra{
     }
     public void status(float resta){
         deuda = deuda - resta;
-        if(total <= 0){
+        if(deuda <= 0){
             estado = "Completado";
             
         }
@@ -288,6 +288,7 @@ public class Tareaprogra{
         boleta.ToString();
         Date primerpago= new Date(122,6,1,9,7,30);
         Transferencia cuentarut = new Transferencia("Banco Estado", "9.116.942-0",3810f,primerpago);
+        boleta.pagoTrans(cuentarut);
         System.out.println();
         System.out.println();
         System.out.println();
