@@ -1,35 +1,26 @@
-
 package tareaprogra;
+
 import java.util.Date;
-class DocumentoTributario {
-    protected String numero;
-    protected String rut;
-    protected Date fecha;
-    
-    public DocumentoTributario(String dato, String carnet, Date calen){
-        
+public class DocumentoTributario {
+    private String numero;
+    private String rut;
+    private Date fecha;
+    private float pagos;
+    public DocumentoTributario(String dato, String carnet, Date calen){   
         numero = dato;
         rut = carnet;
         fecha = calen;
     }
-    
-    
+    public String getNum(){
+        return numero;
+    }
+    public String getRut(){
+        return rut;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public String ToString(){
+     return "Numero:"+numero+"\nRut:"+rut+"\nFecha:"+fecha;
+    }
 }
-
-class Boleta extends DocumentoTributario{
-    
-    public Boleta(String dato, String carnet, Date calen){
-        
-        super(dato,carnet,calen);
-    }
-    
-} 
-
-class Factura extends DocumentoTributario{
-    
-    public Factura(String dato, String carnet, Date calen){
-        
-        super(dato,carnet,calen);
-    }
-    
-} 
