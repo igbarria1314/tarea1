@@ -1,7 +1,54 @@
-
 package tareaprogra;
+
 import java.util.ArrayList;
 import java.util.Date;
+class Articulo {
+    private float peso;
+    private String nombre;
+    private String descripcion;
+    private float precio;
+    public Articulo(String alias, String que, float caro, float kg){
+        peso = kg;
+        nombre = alias;
+        descripcion = que;
+        precio = caro;
+    }
+    public float getPrecio(){
+        return precio;
+    }
+    public float getPeso(){
+        return peso;
+    }        
+    public String ToString(){
+        return "Articulo: "+ nombre+"\nDescripcion: "+ descripcion+"\nPrecio:"+precio+"\nPeso:"+peso+"kg\n";
+    }
+}
+class DetalleOrden {
+    private int cantidad;
+    private Articulo Objeto;
+    public DetalleOrden(Articulo cosa, int valor){
+        cantidad = valor;
+        Objeto = cosa;
+    }
+    public float CalcPrecio(){
+        return Objeto.getPrecio()*cantidad;
+    }
+    public float Iva(){
+        float iva;
+        iva=(float) (CalcPrecio()*0.19);
+        return iva;
+    }
+    public float CalcPrecioSinIVA(){
+        return CalcPrecio()-Iva();
+    }
+    public float CalcPeso(){
+        
+        return Objeto.getPeso() * cantidad;
+    }
+    public String ToString(){
+        return "Cantidad: "+cantidad+"\n"+Objeto.ToString();
+    }
+}
 class OrdenCompra{
     private Date fecha;
     private String estado;
@@ -46,10 +93,7 @@ class OrdenCompra{
         dir= new Direccion(direc);
         elecDoc(direc,r,fecha,eleccion);
     }
-    public void pagoTrans(Transferencia count){
-        Pagos.add(new Pago(count.getMonto(),count.getFecha()));
-        status(count.getMonto());
-    }
+    
     public void finDetalles(){
         estado = "En Progreso";
         Pagos = new ArrayList();
@@ -57,9 +101,8 @@ class OrdenCompra{
     }
     public void status(float resta){
         deuda = deuda - resta;
-        if(deuda <= 0){
+        if(deuda <= 0f){
             estado = "Completado";
-            
         }
         
     }
@@ -75,6 +118,10 @@ class OrdenCompra{
     public void pagTarjeta(Tarjeta tarjet){
         Pagos.add(new Pago(tarjet.getMonto(),tarjet.getFecha()));
         status(tarjet.getMonto());
+    }
+    public void pagoTrans(Transferencia count){
+        Pagos.add(new Pago(count.getMonto(),count.getFecha()));
+        status(count.getMonto());
     }
     public float CalcPrecio(){
         float result = 0;
@@ -92,30 +139,126 @@ class OrdenCompra{
         return CalcPrecio()-Iva();
     }
     
-    public void prtDoc(boolean result){
+    /*public void prtDoc(boolean result){
         if(result = true){
             ToString();
         }
-    }
-    public void ToString(){
+    }*/
+    public String ToString(){
+        String completo;
         if(Fac != null && bol == null){
-            System.out.println(Fac.ToString());
+            completo = Fac.ToString();
         }else{
-            System.out.println(bol.ToString());
+            completo = bol.ToString();
         }
         
-        System.out.println(usuario.ToString()+ "\n" + dir.ToString() + "/ Estado:" + estado);
+        completo = completo + "\n" + usuario.ToString()+ "\n" + dir.ToString() + "/ Estado:" + estado+"\n";
         
         for (int i = 0; i < cantidad; i++) {
-            System.out.println(Lista.get(i).ToString());
+            completo = completo + Lista.get(i).ToString();
+        }
+        completo = completo + "Total:" + total + "\nTotal sin IVA:" + CalcPrecioSinIVA() + "\nIVA:" + Iva()+"\n /Registro de Pagos/\n";
+        int derp = Pagos.size();
+        for (int i = 0; i < derp ; i++) {
+            completo = completo + Pagos.get(i).ToString();
         }
         
-        System.out.println("Total:" + total + "\nTotal sin IVA:" + CalcPrecioSinIVA() + "\nIVA:" + Iva()+"\n /Registro de Pagos/");
-        for (int i = 0; i < Pagos.size() ; i++) {
-            System.out.println(Pagos.get(i).ToString());
+        return completo;
+    }
+}
+class Pago{
+    private float monto;
+    private Date fecha;
+    public Pago(float m, Date f){
+        monto=m;
+        fecha=f;
+    }
+    public float getMonto(){
+        return monto;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public String ToString(){
+        return "Monto:"+monto+"\nFecha:"+fecha+"\n";
+    }
+}
+class Tarjeta extends Pago{
+    private String tipo;
+    private String numTransaccion;
+    public Tarjeta(String t,String numT,float m, Date f){
+        super(m,f);
+        tipo=t;
+        numTransaccion= numT;
+    }
+}
+class Transferencia extends Pago{
+    private String banco;
+    private String numCuenta;
+    public Transferencia(String bank,String nc,float m, Date f){
+        super(m,f);
+        banco=bank;
+        numCuenta=nc;
+    }  
+}
+class Efectivo extends Pago{
+    
+    public Efectivo(float p, Date f){
+        super(p,f);
+    }
+    public float calcDevolucion(float p){
+        
+        if(p<0){
+            p = p *-1;
         }
-        
-        
+        System.out.println("Devolucion:" + p + "\n");
+        return p;
+    }
+}
+class Cliente{
+    private String nombre;
+    private String rut;
+    public Cliente(String nom,String r){
+        nombre=nom;
+        rut=r;
+    }
+    public String getRut(){
+        return rut;
+    }
+    public String ToString(){
+        return "/Nombre del Cliente:" + nombre +"/ RUT:"+ rut+"/";
+    }
+}
+class Direccion{
+    private String direccion;
+    public Direccion(String d){
+        direccion=d;
+    }
+    public String ToString(){
+        return "Direccion:" + direccion;
+    }
+}
+class DocumentoTributario {
+    private String numero;
+    private String rut;
+    private Date fecha;
+    private float pagos;
+    public DocumentoTributario(String dato, String carnet, Date calen){   
+        numero = dato;
+        rut = carnet;
+        fecha = calen;
+    }
+    public String getNum(){
+        return numero;
+    }
+    public String getRut(){
+        return rut;
+    }
+    public Date getFecha(){
+        return fecha;
+    }
+    public String ToString(){
+     return "Numero:"+numero+"\nRut:"+rut+"\nFecha:"+fecha;
     }
 }
 class Boleta extends DocumentoTributario{
@@ -136,31 +279,59 @@ public class Tareaprogra{
         OrdenCompra boleta = new OrdenCompra(fecha);
         
         Articulo yogurth= new Articulo("yogurth","yogurth frutilla",390f,0.02f);
-        Articulo papas = new Articulo("Papas Fritas","Papas Fritas Krispo", 750, 0.03f);
+        Articulo papas = new Articulo("Papas Fritas","Papas Fritas Krispo", 750f, 0.03f);
+        Articulo Polystation = new Articulo("Polystation","Consola Clasica 100% real",250000,1.5f);
+        Articulo Poleron = new Articulo("Poleron", "/ Talla: L / Poleron de Among Us", 60000F,0.25f);
+        Articulo Chalas = new Articulo("Chalas", "/ Talla: 40 / Calidad dudosa", 5000,0.1f);
         
-        boleta.newCliente("Nekotina", "9.116.942-0", "Tus muertos a caballo 247", 2);
+        boleta.newCliente("Daniel Montero", "9.116.942-0", "Avenida Los Olmos 247", 2);
         boleta.newOrden(papas, 3);
         boleta.newOrden(yogurth,4);
         boleta.finDetalles();
-        boleta.ToString();
-        Date primerpago= new Date(122,6,1,9,7,30);
+        String prueba1 = boleta.ToString();
+        System.out.println(prueba1);
+        Date primerpago= new Date(122,9,1,9,7,30);
         Transferencia cuentarut = new Transferencia("Banco Estado", "9.116.942-0",3810f,primerpago);
         boleta.pagoTrans(cuentarut);
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println();
-        boleta.ToString();
+        prueba1 = boleta.ToString();
+        System.out.println(prueba1);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        Date fechapol = new Date(122,11,12,15,7,30);
+        OrdenCompra factura1 = new OrdenCompra(fechapol);
+        factura1.newCliente("El Chelo", "11.432.627 - 7", "Las Torres 1598",1);
+        factura1.newOrden(Polystation, 1);
+        factura1.finDetalles();
+        Date pago1 = new Date(122,11,13,9,30,0);
+        Date pago2 = new Date(122,11,20,10,5,0);
+        Tarjeta Santander = new Tarjeta("Banco Santander","123456",100000f,pago1);
+        Tarjeta Santander2 = new Tarjeta("Banco Santander","123456",150000f,pago2);
+        factura1.pagTarjeta(Santander);
+        factura1.pagTarjeta(Santander2);
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println(factura1.ToString());
+        Date dia = new Date(123,2,9,18,27,12);
         
-        /*String prueba=alDetalle.ToString();
-        System.out.println(prueba+"\n");
-        Date fecha= new Date(120,5,3,10,5,6);
-        DocumentoTributario documento= new DocumentoTributario("23","213333000",fecha);
-        String doc=documento.ToString();
-        System.out.println(doc+"\n");
-        Pago precio= new Pago(400,fecha);
-        String test=precio.ToString();
-        System.out.println(test+"\n");*/
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        OrdenCompra boleta2 = new OrdenCompra(dia);
+        boleta2.newCliente("Daniel Montero", "9.116.942-0", "Avenida Los Olmos 247", 2);
+        boleta2.newOrden(Poleron, 1);
+        boleta2.newOrden(Chalas,2);
+        boleta2.finDetalles();
+        Efectivo lucas = new Efectivo(80000,dia);
+        boleta2.pagEfectivo(lucas);
+        System.out.println( boleta2.ToString());
+        
     }
     
 }
