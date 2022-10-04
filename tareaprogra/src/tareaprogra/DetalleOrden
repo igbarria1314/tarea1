@@ -1,6 +1,6 @@
 package tareaprogra;
 public class DetalleOrden {
-    private int cantidad;
+   private int cantidad;
     private Articulo Objeto;
     public DetalleOrden(Articulo cosa, int valor){
         cantidad = valor;
