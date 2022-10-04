@@ -1,55 +1,7 @@
 
 package tareaprogra;
-
 import java.util.ArrayList;
 import java.util.Date;
-class Articulo {
-    private float peso;
-    private String nombre;
-    private String descripcion;
-    private float precio;
-    public Articulo(String alias, String que, float caro, float kg){
-        peso = kg;
-        nombre = alias;
-        descripcion = que;
-        precio = caro;
-    }
-    public float getPrecio(){
-        return precio;
-    }
-    public float getPeso(){
-        return peso;
-    }        
-    public String ToString(){
-        return "Articulo: "+ nombre+"\nDescripcion: "+ descripcion+"\nPrecio:"+precio+"\nPeso:"+peso+"kg";
-    }
-}
-class DetalleOrden {
-    private int cantidad;
-    private Articulo Objeto;
-    public DetalleOrden(Articulo cosa, int valor){
-        cantidad = valor;
-        Objeto = cosa;
-    }
-    public float CalcPrecio(){
-        return Objeto.getPrecio()*cantidad;
-    }
-    public float Iva(){
-        float iva;
-        iva=(float) (CalcPrecio()*0.19);
-        return iva;
-    }
-    public float CalcPrecioSinIVA(){
-        return CalcPrecio()-Iva();
-    }
-    public float CalcPeso(){
-        
-        return Objeto.getPeso() * cantidad;
-    }
-    public String ToString(){
-        return "Cantidad: "+cantidad+"\nArticulo: "+Objeto.ToString();
-    }
-}
 class OrdenCompra{
     private Date fecha;
     private String estado;
@@ -94,7 +46,7 @@ class OrdenCompra{
         dir= new Direccion(direc);
         elecDoc(direc,r,fecha,eleccion);
     }
-    public void Pagotrans(Transferencia count){
+    public void pagoTrans(Transferencia count){
         Pagos.add(new Pago(count.getMonto(),count.getFecha()));
         status(count.getMonto());
     }
@@ -164,101 +116,6 @@ class OrdenCompra{
         }
         
         
-    }
-}
-class Pago{
-    private float monto;
-    private Date fecha;
-    public Pago(float m, Date f){
-        monto=m;
-        fecha=f;
-    }
-    public float getMonto(){
-        return monto;
-    }
-    public Date getFecha(){
-        return fecha;
-    }
-    public String ToString(){
-        return "Monto:"+monto+"\nFecha:"+fecha;
-    }
-}
-class Tarjeta extends Pago{
-    private String tipo;
-    private String numTransaccion;
-    public Tarjeta(String t,String numT,float m, Date f){
-        super(m,f);
-        tipo=t;
-        numTransaccion= numT;
-    }
-}
-class Transferencia extends Pago{
-    private String banco;
-    private String numCuenta;
-    public Transferencia(String bank,String nc,float m, Date f){
-        super(m,f);
-        banco=bank;
-        numCuenta=nc;
-    }  
-}
-class Efectivo extends Pago{
-    private float pagoDelCliente;
-    public Efectivo(float p,float m, Date f){
-        super(m,f);
-        pagoDelCliente= p;
-    }
-    public float calcDevolucion(float p){
-        
-        if(p<0){
-            p = p *-1;
-        }
-        return p;
-    }
-}
-class Cliente{
-    private String nombre;
-    private String rut;
-    public Cliente(String nom,String r){
-        nombre=nom;
-        rut=r;
-    }
-    public String getRut(){
-        return rut;
-    }
-    public String ToString(){
-        return "/Nombre del Cliente:" + nombre +"/ RUT:"+ rut+"/";
-    }
-}
-class Direccion{
-    private String direccion;
-    public Direccion(String d){
-        direccion=d;
-    }
-    public String ToString(){
-        return "Direccion:" + direccion;
-    }
-}
-class DocumentoTributario {
-    private String numero;
-    private String rut;
-    private Date fecha;
-    private float pagos;
-    public DocumentoTributario(String dato, String carnet, Date calen){   
-        numero = dato;
-        rut = carnet;
-        fecha = calen;
-    }
-    public String getNum(){
-        return numero;
-    }
-    public String getRut(){
-        return rut;
-    }
-    public Date getFecha(){
-        return fecha;
-    }
-    public String ToString(){
-     return "Numero:"+numero+"\nRut:"+rut+"\nFecha:"+fecha;
     }
 }
 class Boleta extends DocumentoTributario{
