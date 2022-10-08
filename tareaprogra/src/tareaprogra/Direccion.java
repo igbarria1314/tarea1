@@ -6,6 +6,9 @@ public class Direccion{
     public Direccion(String d){
         direccion=d;
     }
+    public getDireccion(){
+        return direccion;
+    }
     public String ToString(){
         return "Direccion:" + direccion;
     }
