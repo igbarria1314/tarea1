@@ -91,11 +91,7 @@ class OrdenCompra{
         return CalcPrecio()-Iva();
     }
     
-    /*public void prtDoc(boolean result){
-        if(result = true){
-            ToString();
-        }
-    }*/
+    
     public String ToString(){
         String completo;
         if(Fac != null && bol == null){
