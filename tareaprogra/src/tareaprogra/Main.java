@@ -12,8 +12,9 @@ public class Tareaprogra{
         Articulo Polystation = new Articulo("Polystation","Consola Clasica 100% real",250000,1.5f);
         Articulo Poleron = new Articulo("Poleron", "/ Talla: L / Poleron de Among Us", 60000F,0.25f);
         Articulo Chalas = new Articulo("Chalas", "/ Talla: 40 / Calidad dudosa", 5000,0.1f);
-        
-        boleta.newCliente("Daniel Montero", "9.116.942-0", "Avenida Los Olmos 247", 2);
+        Cliente daniel= new Cliente("Daniel Montero", "9.116.942-0");
+        Direccion dirDaniel= new Direccion("Avenida Los Olmos 247");
+        boleta.newCliente(daniel, dirDaniel, 2);
         boleta.newOrden(papas, 3);
         boleta.newOrden(yogurth,4);
         boleta.finDetalles();
@@ -34,7 +35,9 @@ public class Tareaprogra{
         System.out.println();
         Date fechapol = new Date(122,11,12,15,7,30);
         OrdenCompra factura1 = new OrdenCompra(fechapol);
-        factura1.newCliente("El Chelo", "11.432.627 - 7", "Las Torres 1598",1);
+        Cliente chelo= new Cliente("El Chelo", "11.432.627 - 7");
+        Direccion dirChelo= new Direccion("Las Torres 1598");
+        factura1.newCliente(chelo,dirChelo ,1);
         factura1.newOrden(Polystation, 1);
         factura1.finDetalles();
         Date pago1 = new Date(122,11,13,9,30,0);
@@ -53,7 +56,7 @@ public class Tareaprogra{
         System.out.println();
         System.out.println();
         OrdenCompra boleta2 = new OrdenCompra(dia);
-        boleta2.newCliente("Daniel Montero", "9.116.942-0", "Avenida Los Olmos 247", 2);
+        boleta2.newCliente(daniel,dirDaniel, 2);
         boleta2.newOrden(Poleron, 1);
         boleta2.newOrden(Chalas,2);
         boleta2.finDetalles();
