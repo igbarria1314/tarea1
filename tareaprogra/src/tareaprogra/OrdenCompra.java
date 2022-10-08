@@ -40,10 +40,10 @@ class OrdenCompra{
                 Fac = null;
         }
     }
-    public void newCliente(Cliente client, String direc,int eleccion){
+    public void newCliente(Cliente client, Direccion direc,int eleccion){
         usuario= client;
-        dir= new Direccion(direc);
-        elecDoc(direc,usuario.getRut,fecha,eleccion);
+        dir= direc;
+        elecDoc(dir.getDireccion,usuario.getRut,fecha,eleccion);
     }
     
     public void finDetalles(){
