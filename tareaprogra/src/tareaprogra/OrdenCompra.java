@@ -1,6 +1,8 @@
 
 package tareaprogra;
 
+import java.util.ArrayList;
+import java.util.Date;
 class OrdenCompra{
     private Date fecha;
     private String estado;
@@ -43,7 +45,7 @@ class OrdenCompra{
     public void newCliente(Cliente client, Direccion direc,int eleccion){
         usuario= client;
         dir= direc;
-        elecDoc(dir.getDireccion,usuario.getRut,fecha,eleccion);
+        elecDoc(direc.getDireccion(),usuario.getRut(),fecha,eleccion);
     }
     
     public void finDetalles(){
